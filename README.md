@@ -36,37 +36,6 @@ Test Credentials:
 Email: admin@example.com
 Password: password123
 
-📦src
- ┣ 📂app
- ┃ ┣ 📂admin
- ┃ ┃ ┣ 📂businesses
- ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┣ 📂staff
- ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┣ 📜layout.tsx
- ┃ ┃ ┗ 📜page.tsx
- ┃ ┣ 📂styles
- ┃ ┃ ┣ 📜dashboard.module.css
- ┃ ┃ ┣ 📜header.module.css
- ┃ ┃ ┗ 📜login.module.css
- ┃ ┣ 📜favicon.ico
- ┃ ┣ 📜globals.css
- ┃ ┣ 📜layout.tsx
- ┃ ┗ 📜page.tsx
- ┣ 📂components
- ┃ ┣ 📜BusinessForm.tsx
- ┃ ┣ 📜BusinessTable.tsx
- ┃ ┣ 📜Header.tsx
- ┃ ┣ 📜MSWComponent.tsx
- ┃ ┣ 📜StaffForm.tsx
- ┃ ┗ 📜StaffList.tsx
- ┣ 📂mocks
- ┃ ┣ 📜browser.ts
- ┃ ┗ 📜handlers.ts
- ┗ 📂stores
- ┃ ┣ 📜authStore.ts
- ┃ ┣ 📜businessStore.ts
- ┃ ┗ 📜staffStore.ts
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
