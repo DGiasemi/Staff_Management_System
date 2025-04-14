@@ -58,12 +58,12 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
   const onSubmit = (data: Omit<StaffMember, 'id'>) => {
     const businessExists = businesses.some(b => b.id === data.businessId);
     if (!businessExists) {
-    setError('businessId', {
-      type: 'manual',
-      message: 'Selected business does not exist'
-    });
-    return;
-    }  
+      setError('businessId', {
+        type: 'manual',
+        message: 'Selected business does not exist'
+      });
+      return;
+    }
     if (staffId) {
       updateStaff({
         ...data,
@@ -71,12 +71,14 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
         businessId: data.businessId
       });
     } else {
-      addStaff({
+      const newStaff: StaffMember = {
         ...data,
         id: Date.now(),
         businessId: data.businessId
-      });
-    }  
+      };
+      addStaff(newStaff);
+    }
+    
     onSuccess?.();
     reset();
   };

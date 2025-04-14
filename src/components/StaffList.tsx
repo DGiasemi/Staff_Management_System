@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useStaffStore } from '@/stores/staffStore';
 import { useBusinessStore } from '@/stores/businessStore';
 import { StaffForm } from './StaffForm';
 import styles from '@/app/styles/dashboard.module.css';
 import Link from 'next/link';
 import type { StaffMember } from '@/stores/staffStore';
+import { useReactTable, getCoreRowModel, flexRender, type ColumnDef } from '@tanstack/react-table';
 
 interface StaffListProps {
   businessId?: number;
@@ -33,11 +34,69 @@ export function StaffList({ businessId, onEditStaff }: StaffListProps) {
     loadData();
   }, [fetchStaff, fetchBusinesses]);
 
-  useEffect(() => {
-    if (businessId) {
-      setFilter(businessId);
-    }
-  }, [businessId]);
+  const columns = useMemo<ColumnDef<StaffMember>[]>(
+    () => [
+      {
+        header: 'Name',
+        accessorFn: (row) => `${row.firstName} ${row.lastName}`,
+      },
+      {
+        header: 'Position',
+        accessorKey: 'position',
+        cell: (info) => (
+          <span className={`${styles.positionBadge} ${
+            info.getValue() === 'kitchen' ? styles.kitchen :
+            info.getValue() === 'service' ? styles.service :
+            styles.pr
+          }`}>
+            {info.getValue() as string}
+          </span>
+        ),
+      },
+      {
+        header: 'Email',
+        accessorKey: 'email',
+      },
+      {
+        header: 'Business',
+        accessorKey: 'businessId',
+        cell: (info) => {
+          const business = businesses.find(b => b.id === info.getValue());
+          return business ? `${business.name} (${business.type || 'No type'})` : 'Unknown';
+        },
+      },
+      {
+        header: 'Actions',
+        cell: ({ row }) => (
+          <div className="flex gap-2">
+            <button 
+              onClick={() => handleEdit(row.original.id)}
+              className={styles.secondaryButton}
+            >
+              Edit
+            </button>
+            <button 
+              onClick={() => deleteStaff(row.original.id)}
+              className={styles.dangerButton}
+            >
+              Delete
+            </button>
+          </div>
+        ),
+      },
+    ],
+    [businesses]
+  );
+
+  const filteredStaff = filter === 'all' 
+    ? staff 
+    : staff.filter((member: StaffMember) => member.businessId === filter);
+
+  const table = useReactTable({
+    data: filteredStaff,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  });
 
   const handleEdit = (id: number) => {
     setEditingStaff(id);
@@ -49,26 +108,10 @@ export function StaffList({ businessId, onEditStaff }: StaffListProps) {
     onEditStaff?.(null);
   };
 
-  const getBusinessName = (id: number): string => {
-    
-    const business = businesses.find(b => b.id === id);
-    
-    if (!business) {
-      console.error('Business not found!');
-      return 'Unknown Business';
-    }
-    
-    return `${business.name} (${business.type || 'No type'})`;
-  };
-
-  const filteredStaff = filter === 'all' 
-    ? staff 
-    : staff.filter((member: StaffMember) => member.businessId === filter);
-
   if (isLoading) return <div className={styles.loading}>Loading staff...</div>;
+
   return (
     <div className={styles.dashboardContainer}>
-      {/* Edit Staff Modal */}
       {editingStaff && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
@@ -116,54 +159,36 @@ export function StaffList({ businessId, onEditStaff }: StaffListProps) {
           <div className={styles.dataTableContainer}>
             <table className={styles.dataTable}>
               <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Email</th>
-                  <th>Business</th>
-                  <th>Actions</th>
-                </tr>
+                {table.getHeaderGroups().map(headerGroup => (
+                  <tr key={headerGroup.id}>
+                    {headerGroup.headers.map(header => (
+                      <th key={header.id}>
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                      </th>
+                    ))}
+                  </tr>
+                ))}
               </thead>
               <tbody>
-                {filteredStaff.length === 0 ? (
+                {table.getRowModel().rows.length > 0 ? (
+                  table.getRowModel().rows.map(row => (
+                    <tr key={row.id}>
+                      {row.getVisibleCells().map(cell => (
+                        <td key={cell.id}>
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </td>
+                      ))}
+                    </tr>
+                  ))
+                ) : (
                   <tr>
-                    <td colSpan={5} className="text-center py-4">
+                    <td colSpan={columns.length} className="text-center py-4">
                       No staff members found
                     </td>
                   </tr>
-                ) : (
-                  filteredStaff.map((member: StaffMember) => (
-                    <tr key={member.id}>
-                      <td>{member.firstName} {member.lastName}</td>
-                      <td>
-                        <span className={`${styles.positionBadge} ${
-                          member.position === 'kitchen' ? styles.kitchen :
-                          member.position === 'service' ? styles.service :
-                          styles.pr
-                        }`}>
-                          {member.position}
-                        </span>
-                      </td>
-                      <td>{member.email}</td>
-                      <td>
-                        {getBusinessName(member.businessId)}
-                      </td>
-                      <td>
-                        <button 
-                          onClick={() => handleEdit(member.id)}
-                          className={styles.secondaryButton}
-                        >
-                          Edit
-                        </button>
-                        <button 
-                          onClick={() => deleteStaff(member.id)}
-                          className={styles.dangerButton}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))
                 )}
               </tbody>
             </table>
@@ -171,7 +196,7 @@ export function StaffList({ businessId, onEditStaff }: StaffListProps) {
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow">
-        <h1 className={styles.pageTitle}>Add New Staff</h1>
+          <h1 className={styles.pageTitle}>Add New Staff</h1>
           {businesses.length > 0 ? (
             <StaffForm 
               onSuccess={handleSuccess}
