@@ -1,0 +1,97 @@
+/* remove browser defaults */
+.inputField:-webkit-autofill,
+.inputField:-webkit-autofill:hover, 
+.inputField:-webkit-autofill:focus {
+  -webkit-text-fill-color: #2d3748;
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+/* For Firefox */
+.inputField:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  }
+  
+  .loginBox {
+    width: 400px;
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .loginTitle {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2d3748;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .inputGroup {
+    margin-bottom: 1.5rem;
+  }
+  
+  .inputField {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    color: #2d3748;
+    background-color: white !important;
+  }
+  
+  .inputField:focus {
+    outline: none;
+    border-color: #4299e1;
+  }
+  
+  .loginButton {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #4299e1;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .loginButton:hover {
+    background-color: #3182ce;
+  }
+
+  .passwordContainer {
+    position: relative;
+  }
+  
+  .toggleVisibility {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #718096;
+  }
+  
+  .toggleVisibility:hover {
+    color: #4299e1;
+  }
+
+  .errorMessage {
+    color: #e53e3e;
+    margin-top: 1rem;
+    text-align: center;
+  }

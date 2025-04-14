@@ -1,0 +1,242 @@
+.dashboardContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .pageHeader {
+    margin-bottom: 2rem;
+  }
+  
+  .pageTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    opacity: 30%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .pageDescription {
+    color: #718096;
+    font-size: 0.875rem;
+  }
+  
+  .card {
+    flex: 0 1 400px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cardTitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+  }
+
+  .cardSubtitle {
+    font-size: 1rem;
+    color: #718096;
+    margin-bottom: 0.5rem;
+  }
+  
+  .dashboardGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .actionButton {
+    background-color: #4299e1;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .actionButton:hover {
+    background-color: #3182ce;
+  }
+  
+  .secondaryButton {
+    background-color: #e2e8f0;
+    color: #2d3748;
+    padding: 0.375rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    margin-left: 0.5rem;
+  }
+  
+  .secondaryButton:hover {
+    background-color: #cbd5e0;
+  }
+  
+  .dataTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  .dataTable th {
+    background-color: #f7fafc;
+    color: #718096;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .dataTable td {
+    padding: 1rem;
+    border-top: 1px solid #e2e8f0;
+    color: #4a5568;
+  }
+  
+  @media (max-width: 768px) {
+    .dashboardContainer {
+      padding: 1rem;
+    }
+    
+    .dashboardGrid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Table Styles */
+.dataTableContainer {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+  }
+  
+  .dataTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .dataTable th, .dataTable td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .dataTable th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: #64748b;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .positionBadge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  
+  .kitchen {
+    background-color: #fef2f2;
+    color: #dc2626;
+  }
+  
+  .service {
+    background-color: #eff6ff;
+    color: #2563eb;
+  }
+  
+  .pr {
+    background-color: #ecfdf5;
+    color: #059669;
+  }
+  
+  .formLabel {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #334155;
+  }
+  
+  .errorText {
+    color: #dc2626;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    display: block;
+  }
+  
+  .dangerButton {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 0.375rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    margin-left: 0.5rem;
+  }
+  
+  .dangerButton:hover {
+    background-color: #fecaca;
+  }
+
+  /* Modal Styles */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modalContent {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 500px;
+  }
+  
+  .modalContent h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .inputField {
+    padding: 0.5rem 1rem;
+    background-color: #f8f9fa;
+    color: #718096;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+  }
+
+  .modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }

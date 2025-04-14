@@ -1,0 +1,56 @@
+.header {
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .headerContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 0rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+    transition: color 0.2s;
+  }
+
+  .staticTitle {
+    color: #2d3748 !important;
+    pointer-events: none;
+  }
+  
+  .title:not(.staticTitle):hover {
+    color: #718096;
+  }
+  
+  .userControls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .userEmail {
+    font-size: 0.875rem;
+    color: #718096;
+  }
+  
+  .logoutButton {
+    padding: 0.5rem 1rem;
+    background-color: #f8f9fa;
+    color: #718096;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .logoutButton:hover {
+    background-color: #e2e8f0;
+  }
