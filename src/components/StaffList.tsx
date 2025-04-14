@@ -6,7 +6,6 @@ import { StaffForm } from './StaffForm';
 import styles from '@/app/styles/dashboard.module.css';
 import Link from 'next/link';
 import type { StaffMember } from '@/stores/staffStore';
-import type { Business } from '@/stores/businessStore';
 
 interface StaffListProps {
   businessId?: number;
@@ -40,7 +39,6 @@ export function StaffList({ businessId, onEditStaff }: StaffListProps) {
     }
   }, [businessId]);
 
-  // Update both internal and external edit states
   const handleEdit = (id: number) => {
     setEditingStaff(id);
     onEditStaff?.(id);
@@ -49,37 +47,71 @@ export function StaffList({ businessId, onEditStaff }: StaffListProps) {
   const handleSuccess = () => {
     setEditingStaff(null);
     onEditStaff?.(null);
-    //fetchStaff(); // Refresh all staff data
   };
 
   const getBusinessName = (id: number): string => {
-    const business = businesses.find((b: Business) => b.id === id);
-    return business ? business.name : 'Unknown Business';
+    
+    const business = businesses.find(b => b.id === id);
+    
+    if (!business) {
+      console.error('Business not found!');
+      return 'Unknown Business';
+    }
+    
+    return `${business.name} (${business.type || 'No type'})`;
   };
 
   const filteredStaff = filter === 'all' 
-  ? staff 
-  : staff.filter((member: StaffMember) => member.businessId === filter);
+    ? staff 
+    : staff.filter((member: StaffMember) => member.businessId === filter);
 
-if (isLoading) return <div className={styles.loading}>Loading staff...</div>;
-
+  if (isLoading) return <div className={styles.loading}>Loading staff...</div>;
   return (
     <div className={styles.dashboardContainer}>
+      {/* Edit Staff Modal */}
+      {editingStaff && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h1 className={styles.pageTitle}>Edit Staff Member</h1>
+            <StaffForm 
+              staffId={editingStaff}
+              onSuccess={handleSuccess}
+              businesses={businesses}
+            />
+            <div className={styles.modalActions}>
+              <button 
+                type="submit" 
+                form="staff-form" 
+                className={styles.actionButton}
+              >
+                Update Staff
+              </button>
+              <button 
+                onClick={() => setEditingStaff(null)}
+                className={styles.secondaryButton}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex justify-end mb-4">
             <select
-                value={filter}
-                onChange={(e) => setFilter(e.target.value === 'all' ? 'all' : Number(e.target.value))}
-                className="p-2 border rounded"
-              >
-                <option value="all">All Businesses</option>
-                {businesses.map((business) => (
-                  <option key={business.id} value={business.id}>
-                    {business.name}
-                  </option>
-                ))}
-              </select>
+              value={filter}
+              onChange={(e) => setFilter(e.target.value === 'all' ? 'all' : Number(e.target.value))}
+              className="p-2 border border-gray-300 rounded text-primaryText bg-white"
+            >
+              <option value="all">All Businesses</option>
+              {businesses.map((business) => (
+                <option key={business.id} value={business.id}>
+                  {business.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className={styles.dataTableContainer}>
             <table className={styles.dataTable}>
@@ -139,15 +171,12 @@ if (isLoading) return <div className={styles.loading}>Loading staff...</div>;
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-lg font-semibold mb-4">
-            {editingStaff ? 'Edit Staff' : 'Add New Staff'}
-          </h2>
+        <h1 className={styles.pageTitle}>Add New Staff</h1>
           {businesses.length > 0 ? (
             <StaffForm 
-            staffId={editingStaff}
-            onSuccess={handleSuccess}
-            businesses={businesses}
-          />
+              onSuccess={handleSuccess}
+              businesses={businesses}
+            />
           ) : (
             <div className={styles.errorText}>
               Cannot add staff - no businesses available. <Link href="/admin/businesses" className="text-blue-500 hover:underline">

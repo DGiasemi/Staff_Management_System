@@ -13,7 +13,6 @@ export default function AdminLayout({
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   useEffect(() => {
-    // Check both Zustand state and localStorage
     const storedAuth = localStorage.getItem('auth-storage');
     if (!user && !storedAuth) {
       redirect('/');
@@ -22,7 +21,7 @@ export default function AdminLayout({
   }, [user]);
 
   if (isCheckingAuth) {
-    return <div>Loading...</div>; // Or a nice spinner
+    return <div>Loading...</div>;
   }
 
   return (

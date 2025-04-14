@@ -26,14 +26,15 @@ export default function LoginPage() {
     <div className={styles.loginContainer}>
       <div className={styles.loginBox}>
         <h1 className={styles.loginTitle}>Enter Admin Panel</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="off">
           <div className={styles.inputGroup}>
             <input
               type="email"
               name="email"
-              placeholder="admin@example.com"
+              placeholder="Enter email"
               className={styles.inputField}
               required
+              autoComplete="off"
             />
           </div>
           <div className={styles.inputGroup}>
@@ -41,9 +42,10 @@ export default function LoginPage() {
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
-                placeholder="password123"
+                placeholder="Enter password"
                 className={styles.inputField}
                 required
+                autoComplete="off"
               />
               <button
                 type="button"
@@ -59,11 +61,12 @@ export default function LoginPage() {
               </button>
             </div>
           </div>
-          <button type="submit" 
-          className={styles.loginButton}
-          onClick={() => console.log("Button clicked")}>
+          <button type="submit" className={styles.loginButton}>
             Sign In
           </button>
+          <div className={styles.credentialsHint}>
+            Please use admin@example.com and password123 for testing.
+          </div>
           {error && <div className={styles.errorMessage}>{error}</div>}
         </form>
       </div>

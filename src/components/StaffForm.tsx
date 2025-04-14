@@ -20,8 +20,13 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
     handleSubmit, 
     reset, 
     formState: { errors }, 
-    watch
-  } = useForm<Omit<StaffMember, 'id'>>();
+    watch,
+    setError
+  } = useForm<Omit<StaffMember, 'id'>>({
+    defaultValues: {
+      businessId: businesses[0]?.id || undefined
+    }
+  });
 
   const selectedBusinessId = watch('businessId');
 
@@ -51,25 +56,37 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
   }, [staffId, staff, reset, businesses]);
 
   const onSubmit = (data: Omit<StaffMember, 'id'>) => {
+    const businessExists = businesses.some(b => b.id === data.businessId);
+    if (!businessExists) {
+    setError('businessId', {
+      type: 'manual',
+      message: 'Selected business does not exist'
+    });
+    return;
+    }  
     if (staffId) {
       updateStaff({
         ...data,
         id: staffId,
-        businessId: data.businessId!
+        businessId: data.businessId
       });
     } else {
       addStaff({
         ...data,
-        businessId: data.businessId!
+        id: Date.now(),
+        businessId: data.businessId
       });
-    }
+    }  
     onSuccess?.();
     reset();
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {/* Existing form fields (firstName, lastName, email, position) remain the same */}
+    <form 
+      id="staff-form"
+      onSubmit={handleSubmit(onSubmit)} 
+      className="space-y-4"
+    >
       <div>
         <label className={styles.formLabel}>First Name *</label>
         <input
@@ -119,7 +136,11 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
       <div>
         <label className={styles.formLabel}>Business *</label>
         <select
-          {...register("businessId", { required: "Business is required" })}
+          {...register("businessId", { 
+            required: "Business is required",
+            valueAsNumber: true,
+            validate: (value) => !!value || "Please select a business"
+          })}
           className={styles.inputField}
         >
           <option value="">Select a business</option>
@@ -152,12 +173,12 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
         />
       </div>
 
-      <button 
+      {!staffId &&(<button 
         type="submit" 
         className={styles.actionButton}
       >
-        {staffId ? 'Update Staff' : 'Add Staff'}
-      </button>
+        Add Staff
+      </button>)}
     </form>
   );
 }
