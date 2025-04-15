@@ -32,6 +32,13 @@ A Next.js admin panel for managing businesses and staff members, built with Type
    git clone https://github.com/your-username/staff-management-system.git
    cd staff-management-system
 
+for icon use
+npm install @heroicons/react
+# or
+yarn add @heroicons/react
+# or
+pnpm add @heroicons/react
+
 Test Credentials:
 Email: admin@example.com
 Password: password123
