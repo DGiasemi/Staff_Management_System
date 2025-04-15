@@ -28,8 +28,6 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
     }
   });
 
-  const selectedBusinessId = watch('businessId');
-
   useEffect(() => {
     if (staffId) {
       const staffMember = staff.find(m => m.id === staffId);
