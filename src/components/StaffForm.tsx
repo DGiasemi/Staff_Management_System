@@ -24,7 +24,7 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
     setError
   } = useForm<Omit<StaffMember, 'id'>>({
     defaultValues: {
-      businessId: businesses[0]?.id || undefined
+      businessId: undefined
     }
   });
 
@@ -140,12 +140,12 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
         <select
           {...register("businessId", { 
             required: "Business is required",
-            valueAsNumber: true,
-            validate: (value) => !!value || "Please select a business"
+            setValueAs: (value) => value === "" ? undefined : Number(value),
+            validate: (value) => value !== undefined || "Please select a business"
           })}
           className={styles.inputField}
         >
-          <option value="">Select a business</option>
+        <option value="">Select a business</option>
           {businesses.map(business => (
             <option key={business.id} value={business.id}>
               {business.name} ({business.type})
@@ -157,12 +157,7 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
             Please select a business or 
             <Link href="/admin/businesses" className="text-blue-500 hover:underline text-xs"> create</Link> a new one.
           </span>
-        )}
-        {selectedBusinessId && businesses.some(b => b.id === selectedBusinessId) && (
-          <div className="mt-1 text-sm text-gray-500">
-            {businesses.find(b => b.id === selectedBusinessId)?.location}
-          </div>
-        )}
+        )}        
       </div>
 
       <div>

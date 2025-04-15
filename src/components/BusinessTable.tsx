@@ -4,6 +4,8 @@ import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-tabl
 import { useEffect, useMemo, useState } from 'react';
 import styles from '@/app/styles/dashboard.module.css';
 import { BusinessForm } from './BusinessForm';
+import { ColumnDef, CellContext } from '@tanstack/react-table';
+import { Business, BusinessType } from '@/stores/businessStore';
 
 export function BusinessTable() {
   const { businesses, fetchBusinesses, deleteBusiness } = useBusinessStore();
@@ -32,7 +34,7 @@ export function BusinessTable() {
       : businesses.filter(business => business?.type === typeFilter);
   }, [businesses, typeFilter]);
 
-  const columns = useMemo(
+  const columns: ColumnDef<Business>[] = useMemo(
     () => [
       {
         header: 'Name',
@@ -45,8 +47,8 @@ export function BusinessTable() {
       {
         header: 'Type',
         accessorKey: 'type',
-        cell: ({ getValue }: { getValue: () => any }) => {
-          const type = getValue();
+        cell: ({ getValue }: CellContext<Business, unknown>) => {
+          const type = getValue() as BusinessType | undefined;
           return type ? (
             <span className={`${styles.businessType} ${styles[type]}`}>
               {type}
@@ -56,7 +58,7 @@ export function BusinessTable() {
       },
       {
         header: 'Actions',
-        cell: ({ row }: { row: any }) => (
+        cell: ({ row }: CellContext<Business, unknown>) => (
           <div className="flex gap-2">
             <button 
               onClick={() => setEditingBusiness(row.original.id)}
@@ -74,8 +76,9 @@ export function BusinessTable() {
         ),
       },
     ],
-    []
+    [deleteBusiness]
   );
+  
 
   const table = useReactTable({
     data: filteredBusinesses,

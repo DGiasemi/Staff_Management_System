@@ -4,8 +4,8 @@ import { StaffList } from '@/components/StaffList';
 import styles from '@/app/styles/dashboard.module.css';
 
 export default function StaffManagementPage() {
-  const [editingStaff, setEditingStaff] = useState<number | null>(null);
-  const businessId = 1; // Replace with dynamic value if needed
+  const [, setEditingStaff] = useState<number | null>(null);
+  const businessId = 1;
 
   return (
     <div className={styles.dashboardContainer}>

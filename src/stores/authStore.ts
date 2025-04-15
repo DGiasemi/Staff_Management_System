@@ -29,7 +29,7 @@ export const useAuthStore = create<AuthStore>()(
           }
           set({ error: 'Invalid credentials' });
           return false;
-        } catch (error) {
+        } catch {
           set({ error: 'Login failed' });
           return false;
         } finally {
@@ -42,7 +42,7 @@ export const useAuthStore = create<AuthStore>()(
           await simulateNetworkDelay();
           set({ user: null });
           localStorage.removeItem('auth-storage');
-        } catch (error) {
+        } catch {
           set({ error: 'Logout failed' });
         } finally {
           set({ isLoading: false });

@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 const simulateNetworkDelay = async () => 
   await new Promise(resolve => setTimeout(resolve, 300 + Math.random() * 700));
 
-type BusinessType = "bar" | "restaurant" | "club" | "hotel" | "cafe";
+export type BusinessType = "bar" | "restaurant" | "club" | "hotel" | "cafe";
 
 export type Business = {
   id: number;
@@ -43,7 +43,7 @@ export const useBusinessStore = create<BusinessStore>()(
             ];
             set({ businesses: initialData });
           }
-        } catch (error) {
+        } catch {
           set({ error: 'Failed to fetch businesses' });
         } finally {
           set({ isLoading: false });

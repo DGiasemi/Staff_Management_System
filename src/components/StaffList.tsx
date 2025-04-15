@@ -13,7 +13,7 @@ interface StaffListProps {
   onEditStaff?: (id: number | null) => void;
 }
 
-export function StaffList({ businessId, onEditStaff }: StaffListProps) {
+export function StaffList({ onEditStaff }: StaffListProps) {
   const { staff, fetchStaff, deleteStaff } = useStaffStore();
   const { businesses, fetchBusinesses } = useBusinessStore();
   const [editingStaff, setEditingStaff] = useState<number | null>(null);
