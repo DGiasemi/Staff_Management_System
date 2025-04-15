@@ -1,3 +1,49 @@
+# Staff Management System
+
+A Next.js admin panel for managing businesses and staff members, built with TypeScript and Zustand.
+
+## Features
+
+- Business management (CRUD operations)
+- Staff management (CRUD operations)
+- Authentication flow
+- Responsive design
+- Persistent data storage
+
+## Tech Stack
+
+- Next.js 14 (App Router)
+- TypeScript
+- Zustand (state management)
+- Tailwind CSS + CSS Modules
+- TanStack Table
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm/yarn/pnpm
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/staff-management-system.git
+   cd staff-management-system
+
+for icon use
+npm install @heroicons/react
+# or
+yarn add @heroicons/react
+# or
+pnpm add @heroicons/react
+
+Test Credentials:
+Email: admin@example.com
+Password: password123
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
