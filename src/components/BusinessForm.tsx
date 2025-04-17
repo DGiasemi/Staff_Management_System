@@ -35,8 +35,9 @@ export function BusinessForm({ business, onSuccess }: BusinessFormProps) {
   return (
     <form id="business-form" onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <label className={styles.formLabel}>Business Name*</label>
+        <label htmlFor="business-name" className={styles.formLabel}>Business Name*</label>
         <input
+          id="business-name"
           {...register("name", { required: "Name is required" })}
           className={styles.inputField}
         />
@@ -44,8 +45,9 @@ export function BusinessForm({ business, onSuccess }: BusinessFormProps) {
       </div>
 
       <div>
-        <label className={styles.formLabel}>Location*</label>
+        <label htmlFor="business-location" className={styles.formLabel}>Location*</label>
         <input
+          id="business-location"
           {...register("location", { required: "Location is required" })}
           className={styles.inputField}
         />
@@ -53,8 +55,9 @@ export function BusinessForm({ business, onSuccess }: BusinessFormProps) {
       </div>
 
       <div>
-        <label className={styles.formLabel}>Business Type</label>
+        <label htmlFor="business-type" className={styles.formLabel}>Business Type</label>
         <select
+          id="business-type"
           {...register("type")}
           className={styles.inputField}
         >
@@ -67,9 +70,11 @@ export function BusinessForm({ business, onSuccess }: BusinessFormProps) {
         </select>
       </div>
 
-      {!business && (<button type="submit" className={styles.actionButton}>
-        {'Add Business'}
-      </button>)}
+      {!business && (
+        <button type="submit" className={styles.actionButton}>
+          Add Business
+        </button>
+      )}
     </form>
   );
 }

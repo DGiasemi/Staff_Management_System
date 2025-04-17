@@ -62,23 +62,23 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
       });
       return;
     }
-    if (staffId) {
+      if (staffId) {
       updateStaff({
-        ...data,
-        id: staffId,
-        businessId: data.businessId
-      });
-    } else {
-      const newStaff: StaffMember = {
-        ...data,
-        id: Date.now(),
-        businessId: data.businessId
-      };
+          ...data,
+          id: staffId,
+          businessId: data.businessId
+        });
+      } else {
+        const newStaff: StaffMember = {
+          ...data,
+          id: Date.now(),
+          businessId: data.businessId
+        };
       addStaff(newStaff);
-    }
-    
-    onSuccess?.();
-    reset();
+      }
+      
+      onSuccess?.();
+      reset();
   };
 
   return (
@@ -88,27 +88,53 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
       className="space-y-4"
     >
       <div>
-        <label className={styles.formLabel}>First Name *</label>
+        <label htmlFor="staff-first-name" className={styles.formLabel}>
+          First Name *
+        </label>
         <input
+          id="staff-first-name"
+          autoComplete="given-name"
+          aria-invalid={errors.firstName ? "true" : "false"}
+          aria-describedby="first-name-error"
           {...register("firstName", { required: "First name is required" })}
           className={styles.inputField}
         />
-        {errors.firstName && <span className={styles.errorText}>{errors.firstName.message}</span>}
+        {errors.firstName && (
+          <span id="first-name-error" className={styles.errorText}>
+            {errors.firstName.message}
+          </span>
+        )}
       </div>
 
       <div>
-        <label className={styles.formLabel}>Last Name *</label>
+        <label htmlFor="staff-last-name" className={styles.formLabel}>
+          Last Name *
+        </label>
         <input
+          id="staff-last-name"
+          autoComplete="family-name"
+          aria-invalid={errors.lastName ? "true" : "false"}
+          aria-describedby="last-name-error"
           {...register("lastName", { required: "Last name is required" })}
           className={styles.inputField}
         />
-        {errors.lastName && <span className={styles.errorText}>{errors.lastName.message}</span>}
+        {errors.lastName && (
+          <span id="last-name-error" className={styles.errorText}>
+            {errors.lastName.message}
+          </span>
+        )}
       </div>
 
       <div>
-        <label className={styles.formLabel}>Email *</label>
+        <label htmlFor="staff-email" className={styles.formLabel}>
+          Email *
+        </label>
         <input
+          id="staff-email"
           type="email"
+          autoComplete="email"
+          aria-invalid={errors.email ? "true" : "false"}
+          aria-describedby="email-error"
           {...register("email", { 
             required: "Email is required",
             pattern: {
@@ -118,12 +144,21 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
           })}
           className={styles.inputField}
         />
-        {errors.email && <span className={styles.errorText}>{errors.email.message}</span>}
+        {errors.email && (
+          <span id="email-error" className={styles.errorText}>
+            {errors.email.message}
+          </span>
+        )}
       </div>
 
       <div>
-        <label className={styles.formLabel}>Position *</label>
+        <label htmlFor="staff-position" className={styles.formLabel}>
+          Position *
+        </label>
         <select
+          id="staff-position"
+          aria-invalid={errors.position ? "true" : "false"}
+          aria-describedby="position-error"
           {...register("position", { required: "Position is required" })}
           className={styles.inputField}
         >
@@ -131,11 +166,21 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
           <option value="service">Service</option>
           <option value="PR">PR</option>
         </select>
+        {errors.position && (
+          <span id="position-error" className={styles.errorText}>
+            {errors.position.message}
+          </span>
+        )}
       </div>
 
       <div>
-        <label className={styles.formLabel}>Business *</label>
+        <label htmlFor="staff-business" className={styles.formLabel}>
+          Business *
+        </label>
         <select
+          id="staff-business"
+          aria-invalid={errors.businessId ? "true" : "false"}
+          aria-describedby="business-error"
           {...register("businessId", { 
             required: "Business is required",
             setValueAs: (value) => value === "" ? undefined : Number(value),
@@ -143,7 +188,7 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
           })}
           className={styles.inputField}
         >
-        <option value="">Select a business</option>
+          <option value="">Select a business</option>
           {businesses.map(business => (
             <option key={business.id} value={business.id}>
               {business.name} ({business.type})
@@ -151,17 +196,24 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
           ))}
         </select>
         {errors.businessId && (
-          <span className={styles.errorText}>
-            Please select a business or 
-            <Link href="/admin/businesses" className="text-blue-500 hover:underline text-xs"> create</Link> a new one.
+          <span id="business-error" className={styles.errorText}>
+            Please select a business or{' '}
+            <Link href="/admin/businesses" className="text-blue-500 hover:underline text-xs">
+              create
+            </Link>{' '}
+            a new one.
           </span>
         )}        
       </div>
 
       <div>
-        <label className={styles.formLabel}>Phone Number</label>
+        <label htmlFor="staff-phone" className={styles.formLabel}>
+          Phone Number
+        </label>
         <input
+          id="staff-phone"
           type="tel"
+          autoComplete="tel"
           {...register("phoneNumber")}
           className={styles.inputField}
           placeholder="Optional"
@@ -169,8 +221,8 @@ export function StaffForm({ staffId, onSuccess, businesses }: StaffFormProps) {
       </div>
 
       {!staffId &&(<button 
-        type="submit" 
-        className={styles.actionButton}
+            type="submit" 
+            className={styles.actionButton}
       >
         Add Staff
       </button>)}

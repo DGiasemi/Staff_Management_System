@@ -88,9 +88,11 @@ export function StaffList({ onEditStaff }: StaffListProps) {
     [businesses]
   );
 
-  const filteredStaff = filter === 'all' 
-    ? staff 
-    : staff.filter((member: StaffMember) => member.businessId === filter);
+  const filteredStaff = useMemo(() => {
+    return filter === 'all' 
+      ? staff 
+      : staff.filter((member: StaffMember) => member.businessId === filter);
+  }, [staff, filter]);
 
   const table = useReactTable({
     data: filteredStaff,
